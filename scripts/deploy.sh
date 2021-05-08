@@ -3,11 +3,13 @@
 REPOSITORY=/home/ec2-user/app/step2
 PROJECT_NAME=freelec-springboot2-webservice
 
+echo "> Build 파일 복사"
+
 cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -fl freelec-springboot2-webservice | grep jar | awk '{print $1}')
+CURRENT_PID=$(ps -ef | grep ${PROJECT_NAME} | grep jar | awk '{print $2}')
 
 echo "현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
 
@@ -21,7 +23,7 @@ fi
 
 echo "> 새 어플리케이션 배포"
 
-JAR_NAME=$(ls -tr $REPOSITORY/ | grep jar | tail -n 1)
+JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
 
 echo "> JAR Name: $JAR_NAME"
 
